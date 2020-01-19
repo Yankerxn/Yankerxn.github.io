@@ -1,27 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>首页</title>
-    <link rel="stylesheet" href="css/page.css" />
-    <script type="text/javascript" src="js/jquery.min.js" ></script>
-    <script type="text/javascript" src="js/index.js" ></script>
+    <link rel="stylesheet" href="css/page.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="//unpkg.com/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <link href="//unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css" rel="stylesheet">
 </head>
 <body>
 <div class="left">
     <div class="bigTitle">管理系统</div>
     <div class="lines">
-        <div onclick="pageClick(this)" class="active"><img src="images/icon-1.png" />xx管理</div>
-        <div onclick="pageClick(this)"><img src="images/icon-2.png" />xx管理</div>
-        <div onclick="pageClick(this)"><img src="images/icon-3.png" />xx管理</div>
-        <div onclick="pageClick(this)"><img src="images/icon-4.png" />xx管理</div>
-        <div onclick="pageClick(this)"><img src="images/icon-5.png" />xx管理</div>
+        <div onclick="pageClick(this)" class="active"><img src="images/icon-1.png" alt=""/>类别管理</div>
+        <div onclick="pageClick(this)"><img src="images/icon-2.png" alt=""/>生成页面</div>
+        <div onclick="pageClick(this)"><img src="images/icon-3.png" alt=""/>历史记录</div>
     </div>
 </div>
 <div class="top">
-    <div class="leftTiyle" id="flTitle">xx管理</div>
+    <div class="leftTiyle" id="flTitle">类别管理</div>
     <div class="thisUser">当前用户：Admin</div>
 </div>
-<div class="content">HELLO WORD</div>
+<div class="content">
+    <div id="app">
+        <div style="margin-bottom: 20px; margin-left: 20px">
+            <el-form :inline="true" class="demo-form-inline" style="height: 50px">
+                <el-form-item>
+                    <el-input v-model="input" placeholder="请输入类名"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="addTab(editableTabsValue)">新增分类</el-button>
+                </el-form-item>
+            </el-form>
+            <el-button type="success" @click="addRow()">新增空白条目（确保选中分类的情况下使用）</el-button>
+            <div style="margin-top: 20px">
+                <el-form :inline="true" class="demo-form-inline" style="height: 50px">
+                    <el-form-item>
+                        <el-input v-model="inputTypeName" placeholder="请输入条目类名"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-input v-model="inputRemark" placeholder="请输入备注（可不填）"></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+
+        </div>
+        <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab" @tab-click="tabClick">
+            <el-tab-pane
+                    style="width: 100%;height: 100vh;"
+                    v-for="(item, index) in editableTabs"
+                    :key="item.name"
+                    :label="item.title"
+                    :name="item.name + ''">
+                <template>
+                    <el-table
+                            :data="tableData"
+                            style="width: 100%"
+                            style="height: 100%">
+                        <el-table-column
+                                fixed
+                                prop="date"
+                                label="日期"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="type"
+                                label="类别"
+                                width="120">
+                        </el-table-column>
+                        <el-table-column
+                                prop="remark"
+                                label="备注"
+                                width="120">
+                        </el-table-column>
+                        <el-table-column
+                                fixed="right"
+                                label="操作"
+                                width="120">
+                            <template slot-scope="scope">
+                                <el-button
+                                        @click.native.prevent="deleteRow(scope.$index, tableData)"
+                                        type="text"
+                                        size="small">
+                                    移除
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </el-tab-pane>
+        </el-tabs>
+
+    </div>
+    <script type="text/javascript" src="js/index.js"></script>
+</div>
 </body>
 </html>

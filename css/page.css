@@ -23,9 +23,8 @@ body {
 .content {
 	float: right;
 	width: 80%;
-	text-align: center;
 	font-size: 40px;
-	margin-top: 200px;
+	margin-top: 50px;
 }
 
 .leftTiyle {
@@ -71,4 +70,11 @@ body {
 .lines div:hover {
 	cursor: pointer;
 	color: #FFFFFF;
+}
+.typeName{
+	padding-left: 50px;
+	font-size: 16px;
+	color: #000000;
+	float: left;
+	text-align: center;
 }
