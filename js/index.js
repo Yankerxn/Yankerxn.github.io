@@ -3,7 +3,9 @@ function pageClick(k) {
     $(k).addClass("active");
     $("#flTitle").text($(k).text());
 }
+
 let nameID = "";
+let baseUrl = "http://192.168.1.3:81/search/";
 const Main = {
     data() {
         return {
@@ -51,7 +53,7 @@ const Main = {
             const content = "content";
             let _this = this;
             const postData = "{ \"title\":" + title + ",\"name\":\"" + _this.tabIndex + "\",\"content\":" + content + " }";
-            axios.post('http://127.0.0.1:81/search/itemListAdd', postData)
+            axios.post(baseUrl + 'itemListAdd', postData)
                 .then(function (response) {
                     _this.editableTabs.push({
                         title: title,
@@ -75,7 +77,7 @@ const Main = {
                 tabs.forEach((tab, index) => {
                     if (tab.name === targetName) {
                         const postData = "{ \"name\":\"" + targetName + "\" }";
-                        axios.post('http://127.0.0.1:81/search/itemListDelete', postData)
+                        axios.post(baseUrl + 'itemListDelete', postData)
                             .then(function (response) {
                                 let nextTab = tabs[index + 1] || tabs[index - 1];
                                 if (nextTab) {
@@ -95,7 +97,7 @@ const Main = {
             let _this = this;
             nameID = tab.name;
             const postData = "{ \"name\":\"" + tab.name + "\" }";
-            axios.post('http://127.0.0.1:81/search/typeItemList', postData)
+            axios.post(baseUrl + 'typeItemList', postData)
                 .then(function (response) {
                     _this.tableData = JSON.parse(response.data.msg);
                 })
@@ -106,7 +108,7 @@ const Main = {
             rows.splice(index, 1);
         }, addRow() {
             let _this = this;
-            if (_this.inputTypeName === ""){
+            if (_this.inputTypeName === "") {
                 this.$alert('条目类名不能为空', '提示', {
                     confirmButtonText: '确定',
                 });
@@ -114,8 +116,8 @@ const Main = {
             }
             const date = new Date();
             const time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-            const postData = "{ \"nameID\":\"" + nameID + "\",\"date\":\"" +time + "\",\"type\":\"" + _this.inputTypeName + "\",\"remark\":\"" + _this.inputRemark + "\" }";
-            axios.post('http://127.0.0.1:81/search/typeItemListAdd', postData)
+            const postData = "{ \"nameID\":\"" + nameID + "\",\"date\":\"" + time + "\",\"type\":\"" + _this.inputTypeName + "\",\"remark\":\"" + _this.inputRemark + "\" }";
+            axios.post(baseUrl + 'typeItemListAdd', postData)
                 .then(function (response) {
                     _this.tableData = JSON.parse(response.data.msg);
                     _this.inputTypeName = '';
@@ -128,7 +130,7 @@ const Main = {
     },
     mounted() {
         let _this = this;
-        axios.get('http://127.0.0.1:81/search/itemList')
+        axios.get(baseUrl + 'itemList')
             .then(function (response) {
                 _this.tabIndex = response.data.size;
                 const content = response.data;
