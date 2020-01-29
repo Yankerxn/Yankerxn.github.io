@@ -18,7 +18,7 @@ public abstract class Server {
 	/**
 	 * 端口
 	 */
-	public static int port = 81;
+	public static int port = 8080;
 
 	public Server(int port) {
 		this.port = port;

@@ -64,9 +64,7 @@ public class Executor {
 
 	/**
 	 * 启动线程
-	 * 
-	 * @param Runnable
-	 *            线程
+	 * 线程
 	 */
 	public void execute(Runnable runnable) {
 		executor.execute(runnable);

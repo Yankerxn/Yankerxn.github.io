@@ -1,25 +1,25 @@
 package main;
 
 import frame.Server;
-import frame.http.HttpServer;
+import frame.http.HttpCusServer;
 
 public class Http {
 
 	public static void main(String[] args) {
-		try {	
+		try {
 			String user_dir = System.getProperty("user.dir"); 
 			//
 			frame.JarLoader.load(user_dir + "/libs");
 			frame.JarLoader.addusr_paths(user_dir + "/libs");
 			frame.ClassLoader.loadClassesFromPath();
-			final HttpServer httpserver = new HttpServer(81);//http服务 监听81端口
-			httpserver.bootstrap();//启动
+			final HttpCusServer httpCusServer = new HttpCusServer(8080);//http服务 监听81端口
+			httpCusServer.bootstrap();//启动
 			//程序退出的清理工作
 			Server.cleanShutdownHooks();
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				public void run() {
 					try {
-						httpserver.shutdown();
+						httpCusServer.shutdown();
 					} catch (Throwable e) {
 						e.printStackTrace();
 					}

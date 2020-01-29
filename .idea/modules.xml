@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Yankerxn.github.io.iml" filepath="$PROJECT_DIR$/.idea/Yankerxn.github.io.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yankercn.iml" filepath="$PROJECT_DIR$/yankercn.iml" />
     </modules>
   </component>
 </project>

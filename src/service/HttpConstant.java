@@ -14,4 +14,6 @@ public class HttpConstant {
     public final static String TYPE_ITEM_LIST = "typeItemList";
     // 增加指定类别项
     public final static String TYPE_ITEM_LIST_ADD = "typeItemListAdd";
+    // 删除指定类别项
+    public final static String TYPE_ITEM_LIST_DELETE = "typeItemListDelete";
 }

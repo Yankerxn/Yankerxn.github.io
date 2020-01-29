@@ -2,10 +2,16 @@ function pageClick(k) {
     $(k).parent().find("div").removeClass("active");
     $(k).addClass("active");
     $("#flTitle").text($(k).text());
+    if ($(k).text() === "生成页面") {
+        window.location.href = 'makeListActivity.html'
+    }
+    if ($(k).text() === "类别管理") {
+        window.location.href = 'mainActivity.html'
+    }
 }
 
 let nameID = "";
-let baseUrl = 'http://192.168.1.3:8080/search/';
+let baseUrl = 'https://192.168.1.3:8080/search/';
 const Main = {
     data() {
         return {
@@ -105,7 +111,16 @@ const Main = {
                     console.log(error);
                 });
         }, deleteRow(index, rows) {
+            let _this = this;
             rows.splice(index, 1);
+            const postData = "{ \"index\":\"" + index + "\",\"nameID\":\"" + nameID + "\"}";
+            axios.post(baseUrl + 'typeItemListDelete', postData)
+                .then(function (response) {
+                    // _this.tableData = JSON.parse(response.data.msg);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }, addRow() {
             let _this = this;
             if (_this.inputTypeName === "") {
