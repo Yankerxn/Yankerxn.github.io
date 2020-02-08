@@ -6,6 +6,7 @@ public class HttpConstant {
     public static String typeItemFilePath = "D:\\javaBaseFolder.typeItem.txt";
     // 获取类别列表
     public final static String ITEM_LIST = "itemList";
+    public final static String COMPLETE_ITEM_LIST = "completeItemList";
     // 增加类别
     public final static String ITEM_LIST_ADD = "itemListAdd";
     // 删除类别

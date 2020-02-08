@@ -23,7 +23,15 @@
     <div class="thisUser">当前用户：Admin</div>
 </div>
 <div class="content">
-    <script type="text/javascript" src="js/index.js"></script>
+    <div id="app" style="margin-bottom: 20px; margin-left: 20px">
+        <div class="block">
+            <el-cascader
+                    :options="options"
+                    :props="{ multiple: true, checkStrictly: true }"
+                    clearable></el-cascader>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/markList.js"></script>
 </div>
 </body>
 </html>
