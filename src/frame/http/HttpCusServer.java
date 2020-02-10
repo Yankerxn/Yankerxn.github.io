@@ -31,7 +31,7 @@ public class HttpCusServer extends Server {
 //            server.start();
 
             //实现HTTPS SERVER
-            File file = new File("D:\\github\\yankercn\\yankercn.jks");
+            File file = new File("D:\\JavaProject\\yankercn.jks");
             FileInputStream fis = new FileInputStream(file);
 
             server = HttpsServer.create(new InetSocketAddress(port), 0); //设置HTTPS端口这443

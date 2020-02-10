@@ -11,7 +11,7 @@ function pageClick(k) {
 }
 
 let nameID = "";
-let baseUrl = 'https://192.168.1.3:8080/search/';
+let baseUrl = 'https://192.168.1.3:24/search/';
 var Main = {
     data() {
         return {
