@@ -11,37 +11,29 @@ function pageClick(k) {
 }
 
 let nameID = "";
-let baseUrl = 'https://192.168.1.3:24/search/';
+let baseUrl = 'https://192.168.0.76:24/search/';
 var Main = {
     data() {
         return {
             options: [{
-                value: 'zhinan',
-                label: '指南',
-                children: []
+                "value": "zhinan",
+                "label": "指南",
+                "children": "[]"
             }, {
-                value: 'ziyuan',
-                label: '资源',
-                children: [{
-                    value: 'axure',
-                    label: 'Axure Components'
-                }, {
-                    value: 'sketch',
-                    label: 'Sketch Templates'
-                }, {
-                    value: 'jiaohu',
-                    label: '组件交互文档'
-                }]
+                "value": "ziyuan",
+                "label": "资源",
+                "children": "[{value: 'axure',label: 'Axure Components'}, {value: 'sketch',label: 'Sketch Templates'}, {value: 'jiaohu',label: '组件交互文档'}]"
             }]
         };
+    }, methods: {
+
     },
     mounted() {
         let _this = this;
-        axios.get(baseUrl + 'itemList')
+        axios.get(baseUrl + 'completeItemList')
             .then(function (response) {
-                _this.tabIndex = response.data.size;
-                const content = response.data;
-                _this.editableTabs = JSON.parse(content.msg);
+                console.log(response.data.msg);
+                // _this.options = JSON.parse(response.data.msg);
             })
             .catch(function (error) {
                 console.log(error);
