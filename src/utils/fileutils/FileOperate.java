@@ -31,7 +31,7 @@ public class FileOperate {
      * @param encoding        文本文件打开的编码方式
      * @return 返回文本文件的内容
      */
-    public String readTxt(String filePathAndName, String encoding){
+    public static String readTxt(String filePathAndName, String encoding){
         encoding = encoding.trim();
         StringBuilder str = new StringBuilder();
         String st;
@@ -43,6 +43,35 @@ public class FileOperate {
             } else {
                 isr = new InputStreamReader(fs, encoding);
             }
+            BufferedReader br = new BufferedReader(isr);
+            try {
+                String data = "";
+                while ((data = br.readLine()) != null) {
+                    str.append(data + " ");
+                }
+            } catch (Exception e) {
+                str.append(e.toString());
+            }
+            st = str.toString();
+        } catch (IOException es) {
+            st = "";
+        }
+        return st;
+    }
+
+    /**
+     * 读取文本文件内容
+     *
+     * @param filePathAndName 带有完整绝对路径的文件名
+     * @param encoding        文本文件打开的编码方式
+     * @return 返回文本文件的内容
+     */
+    public static String readTxt(InputStream filePathAndName, String encoding){
+        StringBuilder str = new StringBuilder();
+        String st;
+        encoding = encoding.trim();
+        try {
+            InputStreamReader isr = new InputStreamReader(filePathAndName,encoding);
             BufferedReader br = new BufferedReader(isr);
             try {
                 String data = "";

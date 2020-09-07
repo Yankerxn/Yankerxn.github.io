@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/otherVideoList.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="js/basicUtils/jquery.min.js"></script>
+    <script src="js/basicUtils/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="title-background">
+        <div class="title-background" v-bind:style="{background: title_color}"></div>
+        <div class="title-content">
+            <div class="title-back" @click="btnCloseWindow()"><img src="images-video/back_black.png" alt=""/></div>
+            <div class='grade-name'>{{title_text}}</div>
+        </div>
+    </div>
+    <img class="banner" v-bind:src="title_bg" alt=""/>
+    <div class="version-list-out">
+        <div class="others-version-list" v-for="(item,index) in gradeListDirBooksSelect">
+            <div @click="selectedTypeIndex(index,item.bid)" v-if="selectedIndex === index"
+                 class="each-others-version-tab-selected each-others-version-tab">{{item.bname}}
+            </div>
+            <div @click="selectedTypeIndex(index,item.bid)" v-else-if="selectedIndex !== index"
+                 class="each-others-version-tab">{{item.bname}}
+            </div>
+        </div>
+    </div>
+    <div class="video-unit-list-container">
+        <div class="each-unit-list">
+            <div v-for="item in gradeListDirBooks">
+                <div class="each-unit-other" @click="selectVideo(item)">
+                    <div class="each-unit-image-container-other">
+                        <img class="each-unit-image-other" v-bind:src="item.videocover" alt=""/>
+                        <div class="each-unit-mask-other"></div>
+                        <img class="each-unit-play-other" src="images-video/dir_video_play.png" alt=""/>
+                        <div class="video-progress-other">0%</div>
+                        <div v-if="item.is_free == '1'">
+                            <img class="vip-other" src="images-video/mianfei.png" alt=""/>
+                        </div>
+                        <div v-if="item.is_free == '0'">
+                            <img class="vip-other" src="images-video/huiyuan.png" alt=""/>
+                        </div>
+                    </div>
+                    <div class="each-unit-name-other">{{item.name}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/otherVideoList.js"></script>
+</body>
+</html>

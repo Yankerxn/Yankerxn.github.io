@@ -1,0 +1,176 @@
+body {
+    display: block;
+    margin: 0;
+    background-color: #FFFFFF;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.title {
+    height: 130px;
+    width: 100%;
+    position: fixed;
+    z-index: 1001;
+}
+
+.title-content {
+    width: 100%;
+    flex-direction: row;
+    display: flex;
+    position: absolute;
+    top: 0;
+}
+
+/*返回键*/
+.title-back {
+    height: 88px;
+    width: 88px;
+    margin-left: 20px;
+    margin-top: 30px;
+}
+
+/*标题背景*/
+.title-background {
+    height: 130px;
+    width: 100%;
+}
+
+/*标题*/
+.grade-name {
+    width: 100%;
+    height: 34px;
+    line-height: 34px;
+    font-size: 34px;
+    font-weight: bold;
+    color: #000000;
+    margin-top: 55px;
+    text-align: center;
+    margin-right: 108px;
+}
+
+.banner {
+    width: 100%;
+}
+
+.version-list-out {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/*类型选择列表*/
+.others-version-list {
+    padding: 24px 0 6px 34px;
+    display: flex;
+    overflow: hidden;
+}
+
+.each-others-version-tab {
+    height: 54px;
+    line-height: 54px;
+    padding: 0 30px;
+    margin: 0 24px 24px 0;
+    border: 2px solid #d5d5d5;
+    font-size: 26px;
+    color: #545454;
+    border-radius: 29px;
+}
+
+.each-others-version-tab-selected {
+    background-color: #38bb00;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
+.video-unit-list-container {
+    width: 100%;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    background-color: #F0F0F0;
+    padding-top: 40px;
+}
+
+.each-unit-list {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.each-unit-other {
+    width: 408px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+    flex-grow: 0;
+}
+
+.each-unit-image-container-other {
+    width: 408px;
+    height: 184px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.each-unit-image-other {
+    width: 408px;
+    height: 184px;
+    border-radius: 10px;
+    position: absolute;
+}
+
+.each-unit-mask-other {
+    width: 408px;
+    height: 184px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    position: absolute;
+}
+
+.each-unit-play-other {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+}
+
+.video-progress-other {
+    width: 112px;
+    height: 44px;
+    line-height: 44px;
+    background-color: #38bb00;
+    color: #ffffff;
+    font-size: 24px;
+    text-align: center;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.vip-other {
+    width: 112px;
+    height: 44px;
+    right: 0;
+    top: 0;
+    position: absolute;
+}
+
+.each-unit-name-other {
+    line-height: 30px;
+    color: #707070;
+    font-size: 24px;
+    margin-top: 26px;
+    width: 408px;
+    text-align: center;
+}

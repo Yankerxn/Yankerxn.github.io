@@ -1,0 +1,28 @@
+body {
+    display: block;
+    margin: 0;
+    background-color: #f0f0f0;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+.main{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: wrap;
+    position: relative;
+}
+
+.start-bottom{
+    width: 120px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #3ea751;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 50px;
+    text-align: center;
+}

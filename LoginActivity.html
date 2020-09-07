@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/login.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/basicUtils/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="title">
+        <img class="title-back" src="images-video/back_blue.png" @click="btnCloseWindow()" alt=""/>
+    </div>
+    <div class="login-type">
+        <div class="login-type-content">
+            <template>
+                <el-tabs v-model="activeName" @tab-click="handleClickTabs">
+                    <el-tab-pane label="手机登陆" name="phone_login"></el-tab-pane>
+                    <el-tab-pane label="邮箱登陆" name="email_login"></el-tab-pane>
+                </el-tabs>
+            </template>
+        </div>
+    </div>
+    <div class="login-edit-content">
+        <div class="login-edit-item">
+            <el-input id="account_input" placeholder="请输入手机号" v-model="phone" maxlength="11" clearable></el-input>
+            <div style="min-height: 40px">&nbsp;</div>
+            <el-input placeholder="请输入验证码" v-model="yzm" maxlength="4"></el-input>
+        </div>
+        <img class="login_button" src="images-video/login_button.png" @click="loginAccount()" alt="">
+        <div id="btn_message" class="get_message_code" @click="getMessageCode()">获取验证码</div>
+    </div>
+</div>
+<script type="text/javascript" src="js/login.js"></script>
+<script type="text/javascript" src="js/customUtils/UserInfoUtils.js"></script>
+</body>
+</html>
