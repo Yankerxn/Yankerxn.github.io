@@ -1,71 +1,40 @@
 <!DOCTYPE html>
 <html lang="">
 <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/menu.css"/>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="application/x-javascript"> addEventListener("load", function () {setTimeout(hideURLbar, 0);}, false);
-    function hideURLbar() {
-        window.scrollTo(0, 1);
-    }
-    </script>
-    <meta name="keywords"
-          content="Flat Dark Web Login Form Responsive Templates, Iphone Widget Template, Smartphone login forms,Login form, Widget Template, Responsive Templates, a Ipad 404 Templates, Flat Responsive Templates"/>
+    <script src="js/basicUtils/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-    <link href="css/style.css" rel='stylesheet' type='text/css'/>
-
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
 </head>
 <body>
-<script>$(document).ready(function (c) {
-    $('.close').on('click', function (c) {
-        $('.login-form').fadeOut('slow', function (c) {
-            $('.login-form').remove();
-        });
-    });
-});
-</script>
+<div id="app">
+    <div class="main">
+        <div @click="startTarget('login')" class="start-bottom">登陆</div>
+        <div @click="startTarget('setting')" class="start-bottom">设置</div>
 
-<h1>登录</h1>
-<div class="login-form">
-    <div class="close"></div>
-    <div class="head-info">
-        <label class="lbl-1"> </label>
-        <label class="lbl-2"> </label>
-        <label class="lbl-3"> </label>
+        <div @click="startTarget('chinese')" class="start-bottom">语文</div>
+        <div @click="startTarget('math')" class="start-bottom">数学</div>
+        <div @click="startTarget('english')" class="start-bottom">英语</div>
+
+        <div @click="startTarget('as')" class="start-bottom">奥数</div>
+        <div @click="startTarget('12')" class="start-bottom">作文</div>
+        <div @click="startTarget('13')" class="start-bottom">国学</div>
+        <div @click="startTarget('14')" class="start-bottom">唐诗</div>
+        <div @click="startTarget('15')" class="start-bottom">安全</div>
+        <div @click="startTarget('16')" class="start-bottom">礼仪</div>
+        <div @click="startTarget('17')" class="start-bottom">科学</div>
+        <div @click="startTarget('18')" class="start-bottom">英语</div>
+        <div @click="startTarget('19')" class="start-bottom">单词</div>
+        <div @click="startTarget('20')" class="start-bottom">汉字</div>
+        <div @click="startTarget('21')" class="start-bottom">儿歌</div>
+        <div @click="startTarget('story')" class="start-bottom">故事</div>
     </div>
-    <div class="clear"></div>
-    <div class="avtar"><img src="images/avtar.png" alt=""/></div>
-    <form name="login">
-        <label>
-            <input type="text" class="text" name="username" value="UserName" onFocus="this.value = '';"
-                   onBlur="if (this.value === '') {this.value = 'UserName';}">
-        </label>
-        <div class="key">
-            <label>
-                <input type="password" name="password" value="123456" onFocus="this.value = '';"
-                       onBlur="if (this.value === '') {this.value = '123456';}">
-            </label>
-        </div>
-    </form>
-    <input type="submit" value="Login" onclick="validateLogin()">
 </div>
-<div class="copy-rights">
-    <p>Copyright &copy;2015.Company name All rights reserved.</p>
-</div>
-<script language="javascript">
-    function validateLogin(){
-        const sUserName = document.login.username.value;
-        const sPassword = document.login.password.value;
-        if (sUserName.toString() ==="UserName" && sPassword.toString() ==="123456"){
-            // window.location.href='mainActivity.html'
-            window.location.href='videoList.html'
-        }else {
-            alert("请输入正确的用户名密码!");
-        }
-    }
-</script>
+<script type="text/javascript" src="js/customUtils/CookUtils.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
 </body>
 </html>
