@@ -8,15 +8,24 @@ const Main = {
             let searchUrl;
             switch (target) {
                 case "chinese":
-                    searchUrl = encodeURI("VideoListActivity.html?grade=" + 4 + "&term=" + 2 + "&subjectId=" + 1);
+                    setCookie2("grade1",4);
+                    setCookie2("term1",2);
+                    setCookie2("subjectId",1);
+                    searchUrl = encodeURI("VideoListActivity.html");
                     window.location.href = searchUrl;
                     break;
                 case "math":
-                    searchUrl = encodeURI("VideoListActivity.html?grade=" + 4 + "&term=" + 2 + "&subjectId=" + 2);
+                    setCookie2("grade2",4);
+                    setCookie2("term2",2);
+                    setCookie2("subjectId",2);
+                    searchUrl = encodeURI("VideoListActivity.html");
                     window.location.href = searchUrl;
                     break;
                 case "english":
-                    searchUrl = encodeURI("VideoListActivity.html?grade=" + 4 + "&term=" + 2 + "&subjectId=" + 0);
+                    setCookie2("grade0",4);
+                    setCookie2("term0",2);
+                    setCookie2("subjectId",0);
+                    searchUrl = encodeURI("VideoListActivity.html");
                     window.location.href = searchUrl;
                     break;
                 case "as":

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/listening-activity.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/customUtils/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="title-background">
+        <div class="title-background"></div>
+        <div class="title-content">
+            <div class="title-back" @click="btnCloseWindow()"><img src="images-video/back_white.png" alt=""/></div>
+        </div>
+    </div>
+    <div class="grade-name">听写</div>
+    <div class="submit-title">{{submitTitle}}</div>
+    <div class="submit-title-body">
+        <div class="block"></div>
+        <div class="submit-title-body-content">{{submitTitleBody}}</div>
+        <img class="submit-title-body-content-img" src="images-video/tx_list_btn.png" @click="startChooseActivity()" alt="打开年级选择"/>
+    </div>
+    <div >{{textContent}}</div>
+</div>
+<script type="text/javascript" src="js/listening-activity-js.js"></script>
+<script type="text/javascript" src="js/customUtils/UserInfoUtils.js"></script>
+</body>
+</html>

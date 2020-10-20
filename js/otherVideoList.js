@@ -30,9 +30,7 @@ const Main = {
             loading.close();
         }, selectVideo(item) {
             // 跳转到视频播放页面并携带参数标题&视频id
-            const searchUrl = encodeURI("VideoPlayActivity.html?title=" + item.name + "&id=" + item.nid + "&type=basic");
-            // window.location.replace(searchUrl);
-            window.location.href = searchUrl;
+            window.location.href = encodeURI("VideoPlayActivity.html?title=" + item.name + "&id=" + item.nid + "&type=basic");
         }
     },
     mounted() {
@@ -43,7 +41,8 @@ const Main = {
         });
         _this = this;
         GetRequest(_this);
-        GetBook(_this, 'Preloading')
+        GetBook(_this, 'Preloading');
+        checkVip();
         loading.close();
     }
 };

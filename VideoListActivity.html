@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/videoList.css"/>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="text/javascript" src="js/basicUtils/jquery.min.js"></script>
+    <script type="text/javascript" src="js/customUtils/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
     <script src="js/element-ui/lib/index.js"></script>
-    <script src="js/basicUtils/qs.js"></script>
+    <script src="js/customUtils/qs.js"></script>
+    <script type="text/javascript" src="js/customUtils/UserInfoUtils.js"></script>
 </head>
 <body>
 <div id="app">
@@ -20,7 +21,7 @@
                 <div class='grade-name' id="title"></div>
                 <div class='version-name' id="subtitle"></div>
                 <div class="top-right-reserve-basic" id="chooseBook">
-                    <div class="top-right-reserve-basic-image" @click="dialogVisible = true"
+                    <div class="top-right-reserve-basic-image" @click="openGradeBookList()"
                          @mousedown="onKeyDownChooseBook()"
                          @mouseup="onKeyUpChooseBook()" @mouseout="onKeyOverChooseBook">
                         <img id="choose_book_img" alt=""/>
@@ -38,9 +39,10 @@
                 </div>
                 <div v-if="item.children.length > 0">
                     <div v-for="(children,index) in item.children">
-                        <div class="each-unit-image-container-basic" @click="selectVideo(children)">
-                            <img class="each-unit-image-basic" v-bind:src="children.videocover" alt="">
-                            <div class="each-unit-mask-basic">
+                        <div class="each-unit-image-container-basic">
+                            <img class="each-unit-image-basic"
+                                 v-bind:src="children.videocover" alt="">
+                            <div class="each-unit-mask-basic"  @click="selectVideo(children)">
                                 <!--            <div v-if="{{item.videoMessages[k].process != undefined}}">-->
                                 <div class="video-progress-basic">0%</div>
                                 <!--            </div>-->
@@ -63,6 +65,8 @@
                                 </div>
                             </div>
                             <div class="each-unit-name-basic">{{'第' + (index + 1) + '课时'}}</div>
+                            <div class="each-unit-name-basic2" style="margin-top: 100px" @click="startListening()">听写
+                            </div>
                         </div>
                         <div v-if="subjectId !== 1">
                             <div class="video-unit-list-bottom-title">{{children.name}}</div>
@@ -70,9 +74,10 @@
                     </div>
                 </div>
                 <div v-else-if="item.children.length === 0">
-                    <div class="each-unit-image-container-basic" @click="selectVideo(item)">
-                        <img class="each-unit-image-basic" v-bind:src="item.videocover" alt="">
-                        <div class="each-unit-mask-basic">
+                    <div class="each-unit-image-container-basic">
+                        <img class="each-unit-image-basic" v-bind:src="item.videocover"
+                             alt="">
+                        <div class="each-unit-mask-basic"  @click="selectVideo(item)">
                             <!--            <div v-if="{{item.videoMessages[k].process != undefined}}">-->
                             <div class="video-progress-basic">0%</div>
                             <!--            </div>-->
@@ -95,71 +100,19 @@
                             </div>
                         </div>
                         <div class="each-unit-name-basic">{{'第' + (0 + 1) + '课时'}}</div>
+                        <div class="btn-listening-study"  @click="startListening()">
+                            <div v-if="subjectId === 0">
+                                <img class="btn-listening-study-img" src="images-video/ml_tx.png">
+                            </div>
+                            <div v-if="subjectId === 1">
+                                <img class="btn-listening-study-img" src="images-video/yw_vb_tx.png">
+                            </div>
+                            <div class="each-unit-name-basic2">听写</div>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
-    <div>
-        <el-dialog id="dialog_choose_book" @open="openGradeBookList"
-                   :visible.sync="dialogVisible"
-                   width="100%"
-                   :fullscreen="true"
-                   :show-close="false">
-            <div class="choose-book">
-                <div class="grade-selector-primary">
-                    <div class="container">
-                        <img class="grade-vertical-one-primary" src="images-video/xzjc_xx2.png" alt="">
-                        <img class="grade-vertical-two-primary" src="images-video/xzjc_xx2.png" alt="">
-                        <img class="grade-horizontal-primary" src="images-video/xzjc_xx1.png" alt="">
-                        <div v-for="item in gradeListDirSelect">
-                            <div class="each-grade-primary">
-                                <div class="each-grade-title-primary">{{item.name}}</div>
-                                <div v-for="terms in item.terms" class="each-term-primary ">
-                                    <div v-if="gradeIndex === terms.id"
-                                         @click="selectSheet(terms.id,terms.grade,terms.term)">
-                                        <div class="grade-term-selected-primary">
-                                            {{terms.name}}
-                                        </div>
-                                    </div>
-                                    <div v-else-if="gradeIndex != terms.id"
-                                         @click="selectSheet(terms.id,terms.grade,terms.term)">
-                                        <div class="each-term-primary">
-                                            {{terms.name}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="version-list-container-primary">
-                <div class="body-select-book">
-                    <div v-for="data in versionList" class="body-selected-book-bg ">
-                        <div v-if="selectedBookIndexId === data.bid" @click="selectBook(data.bid,data.ename)">
-                            <div class="each-term-selected-primary">
-                                <div style="padding-top: 20px;color: #ffffff">{{data.ename}}</div>
-                                <div style="padding-top: 20px;color: #ffffff">{{data.bname}}</div>
-                            </div>
-                        </div>
-                        <div v-else-if="selectedBookIndexId != data.bid" @click="selectBook(data.bid,data.ename)">
-                            <div class="each-term-unselected-primary">
-                                <div style="padding-top: 20px;color: #00a2fe">{{data.ename}}</div>
-                                <div style="padding-top: 20px;color: #20292F">{{data.bname}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="bottom-buttons">
-                <img class="bottom-background" src="images-video/xzjc_bj.png" alt=""/>
-                <div class="bottom-cancel-normal" @click="cancelGradeBookList()">取 消</div>
-                <div class="bottom-submit-normal" @click="submitGradeBookList()">选好了</div>
-            </div>
-        </el-dialog>
     </div>
 </div>
 </div>

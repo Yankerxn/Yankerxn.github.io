@@ -1,5 +1,5 @@
 let postData;
-let commonUrl = "http://127.0.0.1:24/search/common";
+let commonUserInfoUrl = "http://127.0.0.1:24/search/common";
 let code;
 
 /** oss创建文件 **/
@@ -10,15 +10,15 @@ function createFileInOss(phoneNumber) {
     }
     randomNum = parseInt(randomNum);
     postData = {url: "/API_quick1_20200107/setYzmFile", filename: randomNum};
-    axios.post(commonUrl, Qs.stringify(postData))
+    axios.post(commonUserInfoUrl, Qs.stringify(postData))
         .then(function (response) {
             console.log(response);
             postData = {url: "/APP_/sendcode", phone: phoneNumber, checkcode: randomNum};
-            axios.post(commonUrl, Qs.stringify(postData))
+            axios.post(commonUserInfoUrl, Qs.stringify(postData))
                 .then(function (response) {
                     console.log(response);
                     response.data.msg = response.data.msg.replace(/(^\s*)|(\s*$)/g, "")
-                    let msg = JSON.parse(response.data.msg)
+                    let msg = JSON.parse(response.data.msg);
                     if (msg.status === 200) {
                         code = msg.data;
                     } else if (msg.status === 400) {
@@ -38,9 +38,9 @@ function createFileInOss(phoneNumber) {
 /** 发送邮箱验证码 **/
 function sendEmailCode(email) {
     postData = {url: "/APP_/sendemail", email: email};
-    axios.post("http://127.0.0.1:24/search/common", Qs.stringify(postData))
+    axios.post(commonUserInfoUrl, Qs.stringify(postData))
         .then(function (response) {
-            response.data.msg = response.data.msg.replace(/(^\s*)|(\s*$)/g, "")
+            response.data.msg = response.data.msg.replace(/(^\s*)|(\s*$)/g, "");
             let data = JSON.parse(response.data.msg);
             code = data.data.data;
         })
@@ -66,13 +66,13 @@ function loginAccount(_this, account, yzm, loginType, wechatID) {
         return;
     }
     postData = {url: "/user_/doulogin", account: account, unid: wechatID, logtp: loginType, ufrom: "1"};
-    axios.post("http://127.0.0.1:24/search/common", Qs.stringify(postData))
+    axios.post(commonUserInfoUrl, Qs.stringify(postData))
         .then(function (response) {
             console.log(response);
-            response.data.msg = response.data.msg.replace(/(^\s*)|(\s*$)/g, "")
+            response.data.msg = response.data.msg.replace(/(^\s*)|(\s*$)/g, "");
             let data = JSON.parse(response.data.msg);
-            setCookie("account", account, 30);
-            setCookie("loginInfo", data.data, 30);
+            setCookie("account", account, 365);
+            setCookie("loginInfo", data.data, 365);
             let substring = data.intime;
             substring = substring.substring(substring.length - 1, substring.length);
             let decode;
@@ -82,7 +82,7 @@ function loginAccount(_this, account, yzm, loginType, wechatID) {
                 let substring2 = data.data.substring(i + 1, data.data.length);
                 decode =  window.atob(substring1 + substring2);
             }
-            setCookie("loginId", decode, 30);
+            setCookie("loginId", decode, 365);
             let searchUrl = encodeURI("MenuActivity.html");
             window.location.replace(searchUrl);
         })
@@ -125,4 +125,16 @@ function getCookie(cookieString, name) {
 //删除cookie
 function delCookie(name) {
     setCookie(name, null, -1);
+}
+
+function checkVip() {
+    let userId = getCookie(document.cookie,"loginId");
+    axios.post(commonUserInfoUrl, Qs.stringify({url: "/Pay_ret/payend_file", uid: userId}))
+        .then(function (response) {
+            response.data.msg = response.data.msg.replace(/(^\s*)|(\s*$)/g, "")
+            let data = JSON.parse(response.data.msg);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }

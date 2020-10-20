@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/basic.css"/>
+    <link rel="stylesheet" href="css/choose-word.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="js/customUtils/jquery.min.js"></script>
+    <script src="js/customUtils/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="title">
+        <div class="title-background">
+            <div class="title-content" style="display: block">
+                <div class='title-text'>{{title_text}}</div>
+                <div class='submit-title-text'>{{subtitle_text}}</div>
+                <div class="top-right-reserve-basic" id="chooseBook">
+                    <div class="top-right-reserve-basic-image" @click="openGradeBookList()">
+                        <img class="choose-book-img" src="images-video/tx_iv_choose.png" alt=""/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="body-content" style="margin-bottom: 100px">
+        <div class="gap" style="margin-top: 30px"></div>
+        <div v-for="item in listData">
+            <div v-if="item.wordData != null && item.wordData.length > 0|| item.chineseData != null && item.chineseData.length > 0"
+                 style="margin-bottom: 77px">
+                <div class="linear-layout-horizon">
+                    <div class="gap-2"></div>
+                    <div class='menu-title'>{{item.name}}</div>
+                    <div v-if="item.is_free == '1'" style="align-self: center">
+                        <div class="free-text">免费</div>
+                    </div>
+                    <div v-if="item.is_free == '0'" style="align-self: center">
+                        <div class="vip-text">会员</div>
+                    </div>
+                    <div class="gap-2"></div>
+                </div>
+                <div style="margin-left: 20px">
+                    <div v-if="item.wordData != null" @click="clickCheckBox(item,1)">
+                        <div class="linear-layout-horizon-content">
+                            <div v-if="item.checkedZi === true">
+                                <img class="menu-check-box" src="images-video/tx_checkbox_checked.png">
+                            </div>
+                            <div v-else-if="item.checkedZi === false">
+                                <img class="menu-check-box" src="images-video/tx_checkbox_normal.png">
+                            </div>
+                            <div class="menu-submit-title">生字</div>
+                        </div>
+                        <div class="linear-layout-horizon-content">
+                            <div v-for="wordData in item.wordData">
+                                <div class="menu-content-text">{{wordData.kw}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="item.chineseData != null && item.chineseData.length > 0" @click="clickCheckBox(item,2)">
+                        <div class="linear-layout-horizon-content" style="margin-top: 30px">
+                            <div v-if="item.checkedCi === true">
+                                <img class="menu-check-box" src="images-video/tx_checkbox_checked.png">
+                            </div>
+                            <div v-else-if="item.checkedCi === false">
+                                <img class="menu-check-box" src="images-video/tx_checkbox_normal.png">
+                            </div>
+                            <div class="menu-submit-title">生词</div>
+                        </div>
+                        <div class="linear-layout-horizon-content">
+                            <div v-for="wordData in item.chineseData">
+                                <div class="menu-content-text">{{wordData.kw}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-content">
+        <div class="gap"></div>
+        <div class="linear-layout-horizon2" style="margin-top: 20px">
+            <div class="check-all-btn" @click="checkAll()">全选</div>
+            <div class="show-check-number-text">{{checkedMessage}}</div>
+            <div class="click-btn-start-listening" @click="startStudy()">开始听写</div>
+        </div>
+    </div>
+</div>
+<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-6.3.1.min.js"></script>
+<script type="text/javascript" src="js/customUtils/oss-utils.js"></script>
+<script type="text/javascript" src="js/customUtils/CookUtils.js"></script>
+<script type="text/javascript" src="js/customUtils/FileUtils.js"></script>
+<script type="text/javascript" src="js/choose-word-js.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/listening-fileupload-activity.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/customUtils/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <img class="img-bg" src="images-video/tx_complete_bg.png">
+    <div class="img-bg2-frame">
+        <a href="javascript:;" class="a-upload">
+            <img class="img-bg2" src="images-video/tx_take_photo.png">
+            <input type="file" name="fileToUpload" id="fileToUpload" onchange="fileSelected();">
+        </a>
+    </div>
+</div>
+<script type="text/javascript" src="js/listening-fileupload-activity.js"></script>
+</body>
+</html>

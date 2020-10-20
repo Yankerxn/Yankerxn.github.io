@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bind.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="js/customUtils/jquery.min.js"></script>
+    <script src="js/customUtils/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div class="allPager" id="app">
+    <div class="title">查询订单号</div>
+    <div class="search-frame">
+        <el-input v-model="input"
+                  placeholder="请输入订单号"
+                  resize="none">
+        </el-input>
+        <div class="search-frame-button" @click="handleSearch()">查询</div>
+    </div>
+    <div id="getOrderView">
+        <div class="get-order-title">如何获取订单号?</div>
+        <div class="get-order-content">
+            <template>
+                <el-tabs v-model="activeName" @tab-click="handleClick">
+                    <el-tab-pane label="支付宝支付" name="first">
+                        <div>
+                            <img src="images-video/zfb_pic_1.png">
+                            <img src="images-video/zfb_pic_2.png">
+                            <img src="images-video/zfb_pic_3.png">
+                            <img src="images-video/zfb_pic_4.png">
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="微信支付" name="second">
+                        <div>
+                            <img src="images-video/wx_pic_1.png">
+                            <img src="images-video/wx_pic_2.png">
+                            <img src="images-video/wx_pic_3.png">
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+            </template>
+        </div>
+    </div>
+    <div id="bindOrderView" class="get-order-content" style="display: none">
+        <div style="text-align: center">
+            <div class="get-order-title">订单信息</div>
+        </div>
+        <div class="dotted-line"></div>
+        <div class="order-info">
+            <div class="get-order-title">购买时间:</div>
+            <div class="order-info-message">{{buyTime}}</div>
+        </div>
+        <div class="order-info">
+            <div class="get-order-title">课程名称:</div>
+            <div class="order-info-message">{{courseName}}</div>
+        </div>
+        <div class="order-info">
+            <div class="get-order-title">支付金额:</div>
+            <div class="order-info-message">{{buyMoney}}</div>
+        </div>
+        <div class="dotted-line" style="margin-bottom: 16px"></div>
+        <div style="text-align: center;margin-top: 100px;margin-bottom: 100px">
+            <el-button type="warning" style="padding: 20px 40px;font-size: 24px" @click="handleBindBuyInfo()" plain>绑定到当前账户</el-button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/customUtils/CookUtils.js"></script>
+<script type="text/javascript" src="js/bind.js"></script>
+</body>
+</html>

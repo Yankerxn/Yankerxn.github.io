@@ -5,6 +5,11 @@ function setCookie(name, value, day) {
     document.cookie = name + '=' + value + ';expires=' + date;
 }
 
+//设置cookie
+function setCookie2(name, value) {
+    setCookie(name,value,365);
+}
+
 //获取cookie
 function getCookie(cookieString, name) {
     const reg = RegExp(name + '=([^;]+)');

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/basic.css"/>
+    <link rel="stylesheet" href="css/listening-complete-activity.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/customUtils/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="title">
+        <div class="title-background">
+            <img class="title-background-auto" style="height: 260px"
+                 src="images-video/tx_complete_display_title_head.png"
+                 alt="">
+            <div class="title-content">
+                <div class="title-back" @click="btnCloseWindow()"><img src="images-video/back_white.png" alt=""/></div>
+                <div class="head-score-underLine">
+                    <div class='version-name' style="width: 100%;font-size: 88px">{{subtitle_text}}</div>
+                    <img class="head-score-underLine" style="width: 90px;margin-top: 30px"
+                         src="images-video/tx_score_underline.png"/>
+                </div>
+                <div class="title-back"></div>
+            </div>
+        </div>
+    </div>
+    <div class="listening-frame">
+        <div class="listening-title">{{title}}</div>
+        <div class="listening-item2">
+            <div v-for="item in wordList">
+                <div class="listening-item">
+                    <div class="listening-item-text-frame">
+                        <div class="listening-item-text">{{item.position+"."}}</div>
+                    </div>
+                    <img class="listening-word-img" v-bind:src="item.cSrc">
+                    <div v-if="item.correct === true">
+                        <img class="listening-word-img2" src="images-video/tx_correct.png">
+                    </div>
+                    <div v-if="item.correct === false">
+                        <img class="listening-word-img2" src="images-video/tx_error.png">
+                    </div>
+                    <div class="listening-item-text2" style="margin-left: 70px;margin-right: 50px">{{item.kw}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="head-score-frame">
+        <div class="head-score-item">
+            <div class="head-score-text">总数</div>
+            <div class="head-score-text2">{{countWord}}</div>
+        </div>
+        <div class="head-score-item-gap"></div>
+        <div class="head-score-item">
+            <div class="head-score-text">正确</div>
+            <div class="head-score-text2">{{correct}}</div>
+        </div>
+        <div class="head-score-item-gap"></div>
+        <div class="head-score-item">
+            <div class="head-score-text">写错</div>
+            <div class="head-score-text2" style="color: #f27271">{{error}}</div>
+        </div>
+        <div class="head-score-item-gap"></div>
+        <div class="head-score-item">
+            <div class="head-score-text">用时</div>
+            <div class="head-score-text2">{{time}}</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/customUtils/CookUtils.js"></script>
+<script type="text/javascript" src="js/listening-complete-activity-js.js"></script>
+</body>
+</html>

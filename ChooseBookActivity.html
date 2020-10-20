@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/choose-book.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="js/customUtils/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
+    <script src="js/customUtils/qs.js"></script>
+    <script type="text/javascript" src="js/customUtils/CookUtils.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="choose-book">
+        <div class="grade-selector-primary">
+            <div class="container">
+                <img class="grade-vertical-one-primary" src="images-video/xzjc_xx2.png" alt="">
+                <img class="grade-vertical-two-primary" src="images-video/xzjc_xx2.png" alt="">
+                <img class="grade-horizontal-primary" src="images-video/xzjc_xx1.png" alt="">
+                <div v-for="item in gradeListDirSelect">
+                    <div class="each-grade-primary">
+                        <div class="each-grade-title-primary">{{item.name}}</div>
+                        <div v-for="terms in item.terms" class="each-term-primary ">
+                            <div v-if="gradeIndex === terms.id"
+                                 @click="selectSheet(terms.id,terms.grade,terms.term)">
+                                <div class="grade-term-selected-primary">
+                                    {{terms.name}}
+                                </div>
+                            </div>
+                            <div v-else-if="gradeIndex != terms.id"
+                                 @click="selectSheet(terms.id,terms.grade,terms.term)">
+                                <div class="each-term-primary">
+                                    {{terms.name}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="version-list-container-primary" >
+        <div class="body-select-book">
+            <div v-for="data in versionList" class="body-selected-book-bg ">
+                <div v-if="selectedBookIndexId === data.bid" @click="selectBook(data.bid,data.ename)">
+                    <div class="each-term-selected-primary">
+                        <div style="padding-top: 20px;color: #ffffff">{{data.ename}}</div>
+                        <div style="padding-top: 20px;color: #ffffff">{{data.bname}}</div>
+                    </div>
+                </div>
+                <div v-else-if="selectedBookIndexId != data.bid" @click="selectBook(data.bid,data.ename)">
+                    <div class="each-term-unselected-primary">
+                        <div style="padding-top: 20px;color: #00a2fe">{{data.ename}}</div>
+                        <div style="padding-top: 20px;color: #20292F">{{data.bname}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="bottom-buttons">
+        <img class="bottom-background" src="images-video/xzjc_bj.png" alt=""/>
+        <div class="bottom-cancel-normal" @click="cancelGradeBookList()">取 消</div>
+        <div class="bottom-submit-normal" @click="submitGradeBookList()">选好了</div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="js/customUtils/choose-book.js"></script>
+</body>
+</html>

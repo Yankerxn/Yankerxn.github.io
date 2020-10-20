@@ -95,6 +95,13 @@ const Main = {
         });
         sendMessageBtn = document.getElementById("btn_message");
         accountEdit = document.getElementById("account_input");
+        accountEdit.style.borderTopWidth = "0";
+        accountEdit.style.borderRightWidth = "0";
+        accountEdit.style.borderLeftWidth = "0";
+        let codeBtn = document.getElementById("code_input");
+        codeBtn.style.borderTopWidth = "0";
+        codeBtn.style.borderRightWidth = "0";
+        codeBtn.style.borderLeftWidth = "0";
         _this = this;
         loading.close();
     }

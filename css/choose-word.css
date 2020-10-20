@@ -1,0 +1,125 @@
+.choose-book-img{
+    width: 140px;
+}
+
+.title-text{
+    font-size: 34px;
+    color: #1e1e1e;
+    margin-left: 60px;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+.submit-title-text{
+    margin-top: 10px;
+    font-size: 24px;
+    color: #a6a6a6;
+    margin-left: 60px;
+}
+
+.body-content{
+    position: relative;
+    top: 20px;
+}
+
+.bottom-content{
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 85px;
+    background-color: #FFFFFF;
+    bottom: 0;
+}
+
+.gap{
+    width: 100%;
+    height: 2px;
+    background-color: #eeeeee;
+}
+
+.gap-2{
+    width: 20%;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 1px;
+    background-color: #f4f4f4;
+    align-self: center;
+}
+
+.menu-title{
+    font-size: 24px;
+    color: #a6a6a6;
+    align-self: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.menu-submit-title{
+    margin-left: 5px;
+    font-size: 12px;
+    color: #747474;
+    align-self: center;
+}
+.menu-check-box{
+    height: 20px;
+    align-self: center;
+    margin-top: 5px;
+}
+.menu-content-text{
+    font-size: 24px;
+    color: #303030;
+    align-self: center;
+    margin-top: 5px;
+    margin-right: 20px;
+    white-space:nowrap;
+}
+.vip-basic {
+    width: 82px;
+    height: 34px;
+}
+
+.free-text{
+    margin-left: 10px;
+    color: #FFFFFF;
+    font-size: 16px;
+    background-color: #55E019;
+    border-radius: 15px;
+    padding: 3px 10px;
+}
+.vip-text{
+    margin-left: 10px;
+    color: #FFFFFF;
+    font-size: 16px;
+    background-color: #CC260A;
+    border-radius: 15px;
+    padding: 3px 10px;
+}
+.check-all-btn{
+    margin-left: 20px;
+    text-decoration: underline;
+    font-size: 28px;
+    color: #7878ff;
+    align-self: center;
+}
+.show-check-number-text{
+    margin-left: 150px;
+    font-size: 28px;
+    color: #303030;
+    align-self: center;
+}
+.click-btn-start-listening{
+    margin-left: 120px;
+    font-size: 34px;
+    color: #FFFFFF;
+    background-color: #7878ff;
+    padding: 15px 40px;
+    align-self: center;
+    position: absolute;
+    right: 0;
+}
+
+.linear-layout-horizon2 {
+    width: 100%;
+    flex-direction: row;
+    display: flex;
+    position: absolute;
+}

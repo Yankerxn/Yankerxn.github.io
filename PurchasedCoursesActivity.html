@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/purchased-courses-activity.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="js/customUtils/jquery.min.js"></script>
+    <script src="js/customUtils/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
+    <script type="text/javascript" src="js/customUtils/UserInfoUtils.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="title-background">
+        <div class="title-background"></div>
+        <div class="title-content">
+            <div class="title-back" @click="btnCloseWindow()"><img src="images-video/back_black.png" alt=""/></div>
+            <div class='grade-name'>已购买课程</div>
+        </div>
+    </div>
+    <div v-for="(item,index) in courseList">
+        <div ></div>
+    </div>
+</div>
+<script type="text/javascript" src="js/purchased-courses-activity-js.js"></script>
+</body>
+</html>

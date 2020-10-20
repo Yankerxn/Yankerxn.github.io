@@ -22,7 +22,7 @@ public class TestWebOcr {
 	// 接口密钥(webapi类型应用开通手写文字识别后，控制台--我的应用---手写文字识别---相应服务的apikey)
 	private static final String TEST_API_KEY = "74e55f606009502c026ad156155bc29e";
 	// 测试图片文件存放位置
-	private static final String IMAGE_FILE_PATH = "D://1.jpg";
+	private static final String IMAGE_FILE_PATH = "D://1.png";
 
 	/**
 	 * 组装http请求头

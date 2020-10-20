@@ -4976,7 +4976,7 @@
     line-height: 36px;
     display: inline-block;
     list-style: none;
-    font-size: 36px;
+    font-size: 24px;
     font-weight: 500;
     color: #303133;
     position: relative
@@ -12360,6 +12360,8 @@
     width: 100%;
     border: 0 solid #DCDFE6;
     border-bottom-width: 1px;
+    border-top-width: 1px;
+    border-left-width: 1px;
 }
 
 .el-input__prefix, .el-input__suffix {

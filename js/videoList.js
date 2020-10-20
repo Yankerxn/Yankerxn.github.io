@@ -3,8 +3,6 @@ let chooseBook;//选课文按钮
 let chooseBookBgTrue;
 let chooseBookBgFalse;
 let bookVerValue;// 数据版本判别
-let oldGrade = 0;
-let oldTerm = 0;
 let oldSelectedBookIndexId = 0;
 let _this;
 const Main = {
@@ -128,63 +126,18 @@ const Main = {
         onKeyOverChooseBook() {
             chooseBook.src = chooseBookBgTrue;
         }, openGradeBookList() { // 打开书本选择弹窗
-            _this = this;
-            oldGrade = _this.grade;
-            oldTerm = _this.term;
             _this.gradeIndex = String((((_this.grade - 1) * 2) + _this.term));
-            const loading = this.$loading({
-                lock: true,
-                text: 'Loading',
-                spinner: 'el-icon-loading'
-            });
-            judgeVersion(_this);
-            GetBook(_this, '');
-            loading.close();
-        }, cancelGradeBookList() { // 关闭书本选择弹窗
-            _this = this;
-            _this.dialogVisible = false;
-            _this.grade = oldGrade;
-            _this.term = oldTerm;
-            _this.gradeIndex = String((((_this.grade - 1) * 2) + _this.term));
-            _this.selectedBookIndexId = oldSelectedBookIndexId;
-        }, submitGradeBookList() { // 提交书本选择
-            const loading = this.$loading({
-                lock: true,
-                text: 'Loading',
-                spinner: 'el-icon-loading'
-            });
-            _this = this;
-            _this.dialogVisible = false;
-            oldGrade = _this.grade;
-            oldTerm = _this.term;
-            oldSelectedBookIndexId = _this.selectedBookIndexId;
-            _this.gradeIndex = String((((_this.grade - 1) * 2) + _this.term));
-            judgeVersion(_this);
-            GetBooksData(_this, '');
-            loading.close();
-        }, selectSheet(id, grade, term) { // 选择书册
-            _this = this;
-            _this.gradeIndex = id;
-            _this.grade = grade;
-            _this.term = term;
-            let list = _this.gradeListDirBooksSelect[_this.grade - 1][_this.term - 1];
-            if (list.length > 0) {
-                _this.selectedBookIndexId = list[0].bid;
-                _this.subtitle_text = list[0].ename;
-            }
-            _this.versionList = list;
-        }, selectBook(id, name) { // 选择书本
-            _this = this;
-            _this.selectedBookIndexId = id;
-            _this.subtitle_text = name;
+            let searchUrl = encodeURI("ChooseBookActivity.html");
+            window.location.href = encodeURI(searchUrl);
         }, selectVideo(item) {
             // 跳转到视频播放页面并携带参数标题&视频id
-            const searchUrl = encodeURI("VideoPlayActivity.html?title=" + item.name + "&id=" + item.nid);
             // window.location.replace(searchUrl);
-            window.location.href = searchUrl;
+            window.location.href = encodeURI("VideoPlayActivity.html?title=" + item.name + "&id=" + item.nid);
         }, btnCloseWindow() {
             // 关闭当前窗口
-            window.history.go(-1);
+            window.location.href = encodeURI("MenuActivity.html");
+        }, startListening(){
+            window.location.href = encodeURI("ChooseWordActivity.html");
         }
     },
     mounted() {
@@ -199,6 +152,7 @@ const Main = {
         // 初始化视频列表
         judgeVersion(_this);
         GetBook(_this, 'Preloading');
+        checkVip();
         loading.close();
     }
 };
@@ -206,22 +160,17 @@ const Ctor = Vue.extend(Main);
 new Ctor().$mount('#app');
 
 function GetRequest(_this) {
-    const url = location.search;
-    const theRequest = {};
-    let content;
-    if (url.indexOf("?") !== -1) {
-        const str = url.substr(1);
-        content = str.split("&");
-        for (let i = 0; i < content.length; i++) {
-            theRequest[content[i].split("=")[0]] = decodeURI(content[i].split("=")[1]);
-        }
-    }
+    _this.subjectId = parseInt(getCookie(document.cookie, "subjectId"));
     // 初始化数据
-    _this.grade = parseInt(theRequest.grade);
-    _this.term = parseInt(theRequest.term);
-    oldGrade = _this.grade;
-    oldTerm = _this.term;
-    _this.subjectId = parseInt(theRequest.subjectId);// 0英语 1语文 2数学
+    _this.grade = parseInt(getCookie(document.cookie, "grade" + _this.subjectId));
+    _this.term = parseInt(getCookie(document.cookie, "term" + _this.subjectId));
+    let content = getCookie(document.cookie, "selectedBookIndexId" + _this.subjectId);
+    if (content.length !== 0) {
+        _this.selectedBookIndexId = parseInt(content);
+    }else {
+        _this.selectedBookIndexId = 0;
+    }
+    oldSelectedBookIndexId = _this.selectedBookIndexId;
     // 选课文的按钮
     chooseBook = document.getElementById("choose_book_img");
     if (_this.subjectId === 0) {
@@ -240,10 +189,6 @@ function GetRequest(_this) {
     chooseBook.src = chooseBookBgTrue;
 }
 
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-// axios.defaults.headers.post['qu'] = 'quick';
-// axios.defaults.headers.post['ver'] = '1.3.5';
-// axios.defaults.headers.post['baoid'] = 'com.feiyi.middlequick';
 // 获取书册列表
 function GetBook(_this, type) {
     const postData = {url: '/feiyiweb/getbooks_group_nj', xl: 0, km: _this.subjectId, bookver: bookVerValue, from: 400};
@@ -255,7 +200,14 @@ function GetBook(_this, type) {
             if (list.length > 0 && _this.selectedBookIndexId === 0) {
                 _this.selectedBookIndexId = list[0].bid;
                 oldSelectedBookIndexId = list[0].bid;
+                setCookie("selectedBookIndexId" + _this.subjectId,oldSelectedBookIndexId,365);
                 _this.subtitle_text = list[0].ename;
+            } else if (list.length > 0) {
+                for (let i = 0; i < list.length; i++) {
+                    if (parseInt(list[i].bid) === parseInt(_this.selectedBookIndexId)) {
+                        _this.subtitle_text = list[i].ename;
+                    }
+                }
             }
             _this.versionList = list;
             if (type === 'Preloading') {
@@ -271,9 +223,6 @@ function GetBook(_this, type) {
 
 // 获取书册列表的详情（视频）
 function GetBooksData(_this, type) {
-    if (type === 'Preloading') {
-        _this.selectedBookIndexId = 0;
-    }
     let postData = {url: '/feiyiweb/getnavdata', bid: oldSelectedBookIndexId, ntp: 0};
     axios.post(commonUrl, Qs.stringify(postData))
         .then(function (response) {
@@ -282,7 +231,7 @@ function GetBooksData(_this, type) {
             _this.gradeIndex = String((((_this.grade - 1) * 2) + _this.term));
             let index = parseInt(_this.gradeIndex);
             _this.title_text = _this.gradeListDirSelect[Math.ceil(index / 2) - 1].name
-                + _this.gradeListDirSelect[Math.ceil(index / 2) - 1].terms[parseInt(oldTerm) - 1].name;
+                + _this.gradeListDirSelect[Math.ceil(index / 2) - 1].terms[parseInt(_this.term) - 1].name;
             document.getElementById("title").innerHTML = _this.title_text;
             document.getElementById("subtitle").innerHTML = _this.subtitle_text;
             for (let i = 0; i < msg.navdata.length; i++) {

@@ -2,10 +2,10 @@
 <html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/setting.css"/>
+    <link rel="stylesheet" href="css/setting-activity.css"/>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="text/javascript" src="js/basicUtils/jquery.min.js"></script>
-    <script src="js/basicUtils/qs.js"></script>
+    <script type="text/javascript" src="js/customUtils/jquery.min.js"></script>
+    <script src="js/customUtils/qs.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
     <script src="js/element-ui/lib/index.js"></script>
@@ -16,7 +16,7 @@
     <div class="title">
         <div class="title-back" @click="btnCloseWindow()"><img src="images-video/back_black.png" alt=""/></div>
         <div class="test">
-            <img class="img-head"  v-bind:src="loginHead" alt="">
+            <img class="img-head" v-bind:src="loginHead" @click="btnHead()" alt="">
         </div>
         <div id="vip_frame" class="test" style="display: none">
             <img class="img-head-bg" src="images-video/img_head_bg.png" alt="">
@@ -33,7 +33,19 @@
         </div>
         <div class="divide"></div>
         <div class="setting-title">设置</div>
-        <div class="divide"></div>
+        <img class="setting-icon" src="images-video/setting_tb.png"/>
+        <div class="divide-2px"></div>
+        <div class="setting-item" @click="openPrivacyAgreement()">隐私政策</div>
+        <img class="setting-icon" src="images-video/setting_tb.png"/>
+        <div class="divide-2px"></div>
+        <div class="setting-item" @click="openUserAgreement()">用户协议</div>
+        <img class="setting-icon" src="images-video/setting_tb.png"/>
+        <div class="divide-2px"></div>
+        <div class="divide-2px"></div>
+        <div class="setting-item" @click="recoverBuyInfo()">恢复已购</div>
+        <div class="divide-2px"></div>
+        <div class="setting-item">隐私投诉或举报请发送至iosenseyvice@163.com</div>
+        <div class="divide-2px"></div>
         <img class="login_button" v-bind:src="loginBtn" @click="btnLogin()" alt=""/>
     </div>
 </div>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/basic.css"/>
+    <link rel="stylesheet" href="css/listening-study-activity.css"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/customUtils/qs.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="js/element-ui/lib/theme-chalk/index.css"/>
+    <script src="js/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="title">
+        <div class="title-background">
+            <img class="title-background-auto" style="height: 120px" src="images-video/listening_study_head_bg.png"
+                 alt="">
+            <div class="title-content">
+                <div class="title-back" @click="btnCloseWindow()"><img src="images-video/back_white.png" alt=""/></div>
+                <div class='version-name' style="width: 100%;font-size: 24px">{{subtitle_text}}</div>
+                <div class="title-back"></div>
+            </div>
+        </div>
+    </div>
+    <div id="noticeListBox" class="noticeListBox">
+        <div class="noticeList" v-for="item in wordList">
+            <div v-if="item.position < nowListeningWordPosition" @click="checkItem(item)">
+                <div class="words-content-frame-dictation-end">
+                    <div class="words-content-item">{{item.position}}</div>
+                    <img class="words-content-item-img2" v-bind:src="item.cSrc"/>
+                </div>
+            </div>
+            <div v-else-if="item.position > nowListeningWordPosition" @click="checkItem(item)">
+                <div class="words-content-frame-normal">
+                    <div class="words-content-item">{{item.position}}</div>
+                </div>
+            </div>
+            <div v-else-if="item.position === nowListeningWordPosition" @click="checkItem(item)">
+                <div class="words-content-frame-dictating">
+                    <div class="words-content-item">{{item.position}}</div>
+                    <img class="words-content-item-img" src="images-video/tx_lb3.png"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <img id="listening_p" class="listening-frame-mode2" src="images-video/tx_word_more_nopaint.png">
+    <div v-if="listeningType === 'c'">
+        <div v-if="nowListeningWordPosition === wordList.length">
+            <div class="control-mode-item-text" @click="controlClick(4)" style="margin: auto;width: 120px;text-align: center">
+                结束
+            </div>
+        </div>
+        <div v-if="nowListeningWordPosition !== wordList.length">
+            <div class="control-mode-item-text" @click="listeningTypeChange()" style="margin: auto;width: 120px;text-align: center">
+                {{listeningTypeText}}
+            </div>
+        </div>
+    </div>
+    <div class="words-content-number-hint">{{nowListeningWordPosition + " / " + wordList.length}}</div>
+    <div id="listening_c" class="canvas-box-frame" style="flex: none">
+        <img class="canvas-box-back" src="images-video/tx_painting_one.png">
+        <canvas class="canvas-box" id="canvas"></canvas>
+    </div>
+    <div class="control-frame">
+        <div v-if="listeningType === 'p'">
+            <div class="control-mode-frame">
+                <div v-if="nowListeningWordPosition === wordList.length">
+                    <div class="control-mode-item-text" style="margin-right: auto;margin-left: 70px"
+                         @click="controlClick(3)">
+                        结束
+                    </div>
+                </div>
+                <div v-else-if="nowListeningWordPosition !== wordList.length">
+                    <div class="control-mode-item-text" style="margin-right: auto;margin-left: 70px"
+                         @click="controlClick(2)">
+                        不会写跳过
+                    </div>
+                </div>
+                <div class="control-mode-item-text" @click="listeningTypeChange()"
+                     style="margin-left: auto;margin-right: 70px">{{listeningTypeText}}
+                </div>
+            </div>
+        </div>
+        <div class="control-mode-frame">
+            <img class="control-mode-item-img" src="images-video/tx_media_previous.png" @click="controlClick(0)"/>
+            <div class="control-mode-item-img-frame" @click="controlClick(1)">
+                <div v-if="isPlaying === true">
+                    <img class="control-mode-item-img2" src="images-video/tx_media_pause.png"/>
+                </div>
+                <div v-else-if="isPlaying === false">
+                    <img class="control-mode-item-img2" src="images-video/tx_media_play.png"/>
+                </div>
+            </div>
+            <img class="control-mode-item-img" src="images-video/tx_media_next.png" @click="controlClick(2)"/>
+        </div>
+    </div>
+    <audio controls="controls" id="audio_player" style="display: none">
+        <source src="" type="audio/mpeg">
+    </audio>
+</div>
+<script type="text/javascript" src="js/customUtils/CookUtils.js"></script>
+<script type="text/javascript" src="js/listening-study-activity-js.js"></script>
+</body>
+</html>
