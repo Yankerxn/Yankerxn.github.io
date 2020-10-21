@@ -84,6 +84,7 @@ const Main = {
                                             _this.videoData = JSON.parse(response.data.msg);
                                             myPlayer.ready(function () {
                                                 const myPlayer = this;
+                                                console.log(_this.videoData.source +"播放地址");
                                                 myPlayer.src(_this.videoData.source); /*动态设置video.js播放的地址。*/
                                                 myPlayer.autoplay();
                                                 if (networkType !== 'other') {
@@ -117,7 +118,6 @@ const Main = {
                         postData = {url: "/freevideo/getFreeVideoByVid", 'vid': _this.videoInfo.id};
                         axios.post(commonUrl, Qs.stringify(postData))
                             .then(function (response) {
-                                console.log(response);
                                 _this.videoData = JSON.parse(response.data.msg);
                                 if (_this.videoData.status !== 200) {
                                     myPlayer.ready(function () {
