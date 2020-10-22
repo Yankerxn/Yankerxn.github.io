@@ -11,9 +11,9 @@ let typeMark = "eng";
 // 是否二次进入
 let twiceAdd = true;
 // 单段播放次数
-let speckingCount = 2;
+let numberOfTimes = 2;
 let nid = "1107";
-let scrollView, listeningCTypeView, listeningPTypeView;
+let scrollView, listeningCTypeView, listeningPTypeView, settingWindowView;
 const Main = {
     data() {
         return {
@@ -22,13 +22,19 @@ const Main = {
             nowListeningWordPosition: 1,
             isPlaying: false,
             listeningTypeText: "我想写在纸上",
-            listeningType: "p"
+            listeningType: "p",
+            autoPlayMode: false,
+            languageMode: true,
+            orderMode: false,
+            switchWidth: 50,
+            autoPlayTimesText: "播放次数",
+            speckingCount: 2
         };
     },
     methods: {
         btnCloseWindow() {
-            // 关闭当前窗口
-            window.history.go(-1);
+            localStorage.setItem("menuData", JSON.stringify(_this.wordList));
+            window.location.href = encodeURI("ListeningActivity.html");
         },
         checkItem(item) {
             // clearDraw();
@@ -39,11 +45,32 @@ const Main = {
         },
         listeningTypeChange() {
             showListeningTypeChangeWindow();
+        }, handlerAutoPlayModeChange(status) {
+            // 限时听写
+            _this.autoPlayMode = status;
+        }, handlerLanguageModeChange(status) {
+            _this.languageMode = status;
+        }, handlerOrderModeChange(status) {
+            _this.orderMode = status;
+        }, handlerAutoTimes(progress) {
+            _this.speckingCount = progress;
+            _this.autoPlayTimesText = "播放次数(" + progress + ")";
+        }, handlerCloseSettingWindow() {
+            settingWindowView.style.display = "none";
+            _this.autoPlayMode = localStorage.getItem("autoPlayMode") === "true";
+            _this.speckingCount = parseInt(localStorage.getItem("speckingCount"));
+        }, handlerPositiveSettingWindow() {
+            settingWindowView.style.display = "none";
+            localStorage.setItem("autoPlayMode", _this.autoPlayMode);
+            localStorage.setItem("speckingCount", _this.speckingCount);
+        }, handlerShowSettingWindow() {
+            settingWindowView.style.display = "block";
         }
     },
     mounted() {
         _this = this;
         initData();
+        setInitData();
         draw();
         showListeningTypeWindow();
     }
@@ -58,6 +85,7 @@ function initData() {
     scrollView = document.getElementById("noticeListBox");
     listeningCTypeView = document.getElementById("listening_c");
     listeningPTypeView = document.getElementById("listening_p");
+    settingWindowView = document.getElementById("setting_window");
     let comingType = localStorage.getItem("comingType");
     let words = localStorage.getItem("menuData");
     let temporary;
@@ -86,7 +114,7 @@ function initData() {
                 }
                 strings += string.substring(1, string.length - 1);
                 strings += ",";
-                if (_this.subtitle_text === '') {
+                if (_this.subtitle_text === '' || _this.subtitle_text === null) {
                     _this.subtitle_text = words[i].name;
                 }
             }
@@ -96,15 +124,16 @@ function initData() {
         temporary = JSON.parse(strings);
     } else {
         temporary = JSON.parse(words);
-        if (_this.subtitle_text === '') {
-            _this.subtitle_text = temporary[0].name;
+        if (_this.subtitle_text === '' || _this.subtitle_text === null) {
+            _this.subtitle_text = temporary[0].subtitle;
         }
     }
     for (let i = 0; i < temporary.length; i++) {
         temporary[i]["position"] = i + 1;
         temporary[i]["cSrc"] = "";
+        temporary[i]["touching"] = "0";
         if (temporary[i]["kw"].length > 1) {
-            if (comingType === ''){
+            if (comingType === '') {
                 temporary[i]["voiceUrl"] = "resource/" + temporary[i]["voiceUrl"];
             }
         }
@@ -127,18 +156,20 @@ function initData() {
                     audioPlayer.pause();
                     // 需要跳转到下一曲
                     twiceAdd = true;
-                    if (speckingCount > 1) {
-                        speckingCount--;
+                    if (numberOfTimes > 1) {
+                        numberOfTimes--;
                         audioPlayer.currentTime = parseFloat(_this.wordList[_this.nowListeningWordPosition - 1].time);
                         audioPlayer.play();
                     } else {
                         setTimeout(function () {
                             if (twiceAdd) {
                                 twiceAdd = false;
-                                _this.nowListeningWordPosition++;
-                                speckingCount = 2;
-                                saveToList();
-                                audioPlayer.play();
+                                numberOfTimes = _this.speckingCount;
+                                if (_this.autoPlayMode) {
+                                    _this.nowListeningWordPosition++;
+                                    saveToList();
+                                    audioPlayer.play();
+                                }
                             }
                         }, 1000);
                     }
@@ -279,10 +310,11 @@ function mediaPlayerNext(type) {
         case 1:
             if (!_this.isPlaying) {
                 _this.isPlaying = true;
-                if (_this.wordList[0].duration === '') {
+                if (_this.wordList[0].duration === '' || _this.wordList[0].duration === null) {
                     _this.wordList[0].duration = new Date().getTime();
                 }
                 audioPlayer.play();
+                audioPlayer.currentTime = parseFloat(_this.wordList[_this.nowListeningWordPosition - 1].time);
             } else {
                 _this.isPlaying = false;
                 audioPlayer.pause();
@@ -361,16 +393,27 @@ function showListeningTypeChangeWindow() {
  * 第一次选择听写方式
  */
 function showListeningTypeWindow() {
-    _this.$confirm('请选择听写模式', '提示', {
-        confirmButtonText: '写在电脑上',
-        cancelButtonText: '写在纸上',
-        center: true
-    }).then(() => {
+    let listeningWordsType = localStorage.getItem("listeningWordsType");
+    console.log("data" + listeningWordsType);
+    localStorage.setItem("listeningWordsType", null);
+    if (listeningWordsType === null) {
+        _this.autoPlayTimesText = "播放次数(" + _this.speckingCount + ")";
+        _this.$confirm('请选择听写模式', '提示', {
+            confirmButtonText: '写在电脑上',
+            cancelButtonText: '写在纸上',
+            center: true
+        }).then(() => {
 
-    }).catch(() => {
-        _this.listeningType = 'p';
-        changeListeningType();
-    });
+        }).catch(() => {
+            _this.listeningType = 'p';
+            changeListeningType();
+        });
+    } else {
+        if (listeningWordsType === 'c') {
+            _this.listeningType = 'p';
+            changeListeningType();
+        }
+    }
 }
 
 /**
@@ -388,4 +431,16 @@ function changeListeningType() {
         listeningPTypeView.style.display = 'block';
         _this.listeningTypeText = "我想写在电脑上";
     }
+}
+
+/** 设置基础数据 **/
+function setInitData() {
+    if (localStorage.getItem("autoPlayMode") === null) {
+        localStorage.setItem("autoPlayMode", "false");
+    }
+    if (localStorage.getItem("speckingCount") === null) {
+        localStorage.setItem("speckingCount", "2");
+    }
+    _this.autoPlayMode = localStorage.getItem("autoPlayMode") === "true";
+    _this.speckingCount = parseInt(localStorage.getItem("speckingCount"));
 }

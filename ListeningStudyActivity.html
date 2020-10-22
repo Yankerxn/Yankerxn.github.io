@@ -19,7 +19,7 @@
             <div class="title-content">
                 <div class="title-back" @click="btnCloseWindow()"><img src="images-video/back_white.png" alt=""/></div>
                 <div class='version-name' style="width: 100%;font-size: 24px">{{subtitle_text}}</div>
-                <div class="title-back"></div>
+                <div class="title-back" @click="handlerShowSettingWindow()"><img src="images-video/tx_setting.png"></div>
             </div>
         </div>
     </div>
@@ -47,12 +47,14 @@
     <img id="listening_p" class="listening-frame-mode2" src="images-video/tx_word_more_nopaint.png">
     <div v-if="listeningType === 'c'">
         <div v-if="nowListeningWordPosition === wordList.length">
-            <div class="control-mode-item-text" @click="controlClick(4)" style="margin: auto;width: 120px;text-align: center">
+            <div class="control-mode-item-text" @click="controlClick(4)"
+                 style="margin: auto;width: 120px;text-align: center">
                 结束
             </div>
         </div>
         <div v-if="nowListeningWordPosition !== wordList.length">
-            <div class="control-mode-item-text" @click="listeningTypeChange()" style="margin: auto;width: 120px;text-align: center">
+            <div class="control-mode-item-text" @click="listeningTypeChange()"
+                 style="margin: auto;width: 120px;text-align: center">
                 {{listeningTypeText}}
             </div>
         </div>
@@ -98,6 +100,72 @@
     <audio controls="controls" id="audio_player" style="display: none">
         <source src="" type="audio/mpeg">
     </audio>
+    <div class="setting-window-frame" id="setting_window">
+        <div class="setting-window-frame-in">
+            <img class="setting-window-head-img" src="images-video/tx_dialog_top_bg.png">
+            <div class="setting-window-head-title">听写设置</div>
+            <div class="setting-window-item">
+                <div class="setting-window-item-text">限时听写</div>
+                <div style="margin-left: 40%">
+                    <el-switch
+                            inactive-text="&ensp;关&ensp;"
+                            active-text="&ensp;开&ensp;"
+                            v-model="autoPlayMode"
+                            active-color="#7777EF"
+                            inactive-color="#ECECEC"
+                            :width=50
+                            @change="handlerAutoPlayModeChange">
+                    </el-switch>
+                </div>
+            </div>
+            <div class="gap-phantom"></div>
+            <div class="setting-window-item">
+                <div class="setting-window-item-text">{{autoPlayTimesText}}</div>
+                <div style="margin-left: 10%;width: 55%">
+                    <el-slider v-model="speckingCount" :min="1" :max="5" @change="handlerAutoTimes"></el-slider>
+                </div>
+            </div>
+            <div class="gap-phantom"></div>
+            <div class="setting-window-item">
+                <div class="setting-window-item-text">语音选项</div>
+                <div style="margin-left: 40%">
+                    <el-switch
+                            inactive-text="英文"
+                            active-text="中文"
+                            v-model="languageMode"
+                            disabled
+                            active-color="#7777EF"
+                            inactive-color="#ECECEC"
+                            :width=50
+                            @change="handlerLanguageModeChange">
+                    </el-switch>
+                </div>
+            </div>
+            <div class="gap-phantom"></div>
+            <div class="setting-window-item">
+                <div class="setting-window-item-text">听写顺序</div>
+                <div style="margin-left: 40%">
+                    <el-switch
+                            inactive-text="正常"
+                            active-text="打乱"
+                            v-model="orderMode"
+                            disabled
+                            active-color="#7777EF"
+                            inactive-color="#ECECEC"
+                            :width=50
+                            @change="handlerOrderModeChange">
+                    </el-switch>
+                </div>
+            </div>
+            <div class="gap-phantom"></div>
+            <div class="setting-window-item">
+                <div style="margin: auto;flex-direction: row;display: flex;">
+                    <div class="setting-window-item-cancel-text" @click="handlerCloseSettingWindow">关闭</div>
+                    <div class="setting-window-item-positive-text" @click="handlerPositiveSettingWindow">选好了</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript" src="js/customUtils/CookUtils.js"></script>
 <script type="text/javascript" src="js/listening-study-activity-js.js"></script>
